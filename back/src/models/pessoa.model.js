@@ -14,3 +14,7 @@ const pessoaScheme = new mongoose.Schema({
     required: true,
   },
 });
+
+const pessoaModel = mongoose.model("Pessoa", pessoaScheme);
+
+module.exports = pessoaModel;
