@@ -1,3 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;403&display=swap");
+
 .button-container {
-  text-align: center;
+  text-align: end;
+}
+
+.text-link {
+  color: #eee;
+  text-decoration: none;
+}
+
+.text-link:hover {
+  color: #eee;
+}
+
+* {
+  font-family: "Quicksand";
 }

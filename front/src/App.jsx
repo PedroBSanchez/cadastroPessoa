@@ -1,11 +1,14 @@
 import "./App.css";
 import { useState } from "react";
-import List from "./components/List";
-
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Button } from "react-bootstrap";
+
+import List from "./components/List";
+import Forms from "./components/Forms";
+import FormsEdit from "./components/FormsEdit";
 
 function App() {
   const [people, setPeople] = useState([
@@ -27,20 +30,36 @@ function App() {
   ]);
 
   return (
-    <Container>
-      <Row className="mt-5">
-        <Col sm={8}>
-          <h1>Pessoas</h1>
-        </Col>
-        <Col sm={4} className="button-container">
-          <Button>Adicionar</Button>
-        </Col>
-      </Row>
-      <hr />
-      <Row>
-        <List />
-      </Row>
-    </Container>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Container>
+            <Row className="mt-5 top-content">
+              <Col sm={8}>
+                <h1>Pessoas</h1>
+              </Col>
+              <Col sm={4} className="button-container">
+                <Button className="mt-2">
+                  <Link to="/adicionar" className="text-link">
+                    Adicionar
+                  </Link>
+                </Button>
+              </Col>
+            </Row>
+            <hr />
+            <Row>
+              <List people={people} />
+            </Row>
+          </Container>
+        </Route>
+        <Route exact path="/adicionar">
+          <Forms />
+        </Route>
+        <Route exact path="/:personId">
+          <FormsEdit />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
