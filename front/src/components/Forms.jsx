@@ -51,7 +51,7 @@ const Forms = ({ handlePersonPost }) => {
           </Row>
           <Form>
             <Row>
-              <Col sm={7}>
+              <Col sm={6}>
                 <FloatingLabel label="Nome" className="input-control">
                   <Form.Control
                     placeholder="Nome"
@@ -60,7 +60,7 @@ const Forms = ({ handlePersonPost }) => {
                   />
                 </FloatingLabel>
               </Col>
-              <Col sm={5}>
+              <Col sm={6}>
                 <FloatingLabel label="Data de nascimento">
                   <Form.Control
                     placeholder="Data de nascimento"

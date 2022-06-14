@@ -23,12 +23,12 @@ function App() {
     });
   };
 
-  const handlePersonPost = (name, birthDay, ccpf) => {
+  const handlePersonPost = (param_nome, param_dataNascimento, param_cpf) => {
     axios
       .post(`${apiUrl}/pessoas`, {
-        nome: name,
-        dataNascimento: birthDay,
-        cpf: ccpf,
+        nome: param_nome,
+        dataNascimento: param_dataNascimento,
+        cpf: param_cpf,
       })
       .then((res) => {
         handlePeopleGet();
@@ -44,11 +44,14 @@ function App() {
       .delete(`${apiUrl}/pessoas/${personId}`)
       .then((res) => {
         handlePeopleGet();
+        console.log(res.data);
       })
       .catch((error) => {
-        alert(`Erro: ${error}`);
+        console.log(error.response.data);
       });
   };
+
+  const handlePersonPut = (nome, data) => {};
 
   useEffect(() => {
     handlePeopleGet();
@@ -73,7 +76,11 @@ function App() {
             </Row>
             <hr />
             <Row>
-              <List people={people} />
+              <List
+                people={people}
+                handlePersonDelete={handlePersonDelete}
+                handlePersonPut={handlePersonPut}
+              />
             </Row>
           </Container>
         </Route>

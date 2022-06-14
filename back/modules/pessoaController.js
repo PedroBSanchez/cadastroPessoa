@@ -28,7 +28,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   let cpfValido = validaCpf(req.body.cpf);
-  let cpfExistente = findByCpf(req.body.cpf);
+  let cpfExistente = await findByCpf(req.body.cpf);
   try {
     if (cpfValido && !cpfExistente) {
       const pessoa = await PessoaModel.create(req.body);
