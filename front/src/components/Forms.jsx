@@ -15,7 +15,7 @@ import {
 import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-const Forms = () => {
+const Forms = ({ handlePersonPost }) => {
   const [name, setName] = useState("");
   const [dataNascimento, setDataNascimento] = useState();
   const [cpf, setCpf] = useState("");
@@ -28,10 +28,14 @@ const Forms = () => {
     setCpf(e.target.value);
   };
 
+  const handleAddButtonClick = () => {
+    handlePersonPost(name, dataNascimento, cpf);
+  };
+
   return (
     <Container>
       <Row className="justify-content-center">
-        <Card className="mt-5 p-3" style={{ width: "40%" }}>
+        <Card className="mt-5 p-3 card-container" style={{ width: "40%" }}>
           <Row className="justify-content-end">
             <Col sm={11}>
               <h1>Cadastrar Pessoa</h1>
@@ -48,10 +52,11 @@ const Forms = () => {
           <Form>
             <Row>
               <Col sm={7}>
-                <FloatingLabel label="Nome">
+                <FloatingLabel label="Nome" className="input-control">
                   <Form.Control
                     placeholder="Nome"
                     onChange={handleInputNameChange}
+                    className="input-control"
                   />
                 </FloatingLabel>
               </Col>
@@ -78,7 +83,11 @@ const Forms = () => {
           </Form>
           <Row className="mt-5">
             <Col sm={12} className="offset-sm-9">
-              <Button variant="outline-success" className="align">
+              <Button
+                variant="outline-success"
+                className="align"
+                onClick={handleAddButtonClick}
+              >
                 Adicionar
               </Button>
             </Col>

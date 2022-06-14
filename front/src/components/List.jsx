@@ -3,6 +3,7 @@ import { Col, Row, Table } from "react-bootstrap";
 import { AiFillEdit } from "react-icons/ai";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import "./List.css";
 
@@ -20,7 +21,7 @@ const List = ({ people }) => {
       </thead>
       <tbody>
         {people.map((person, index) => (
-          <tr key={index}>
+          <tr key={person._id}>
             <td>{index + 1}</td>
             <td>{person.nome}</td>
             <td>{person.cpf}</td>
