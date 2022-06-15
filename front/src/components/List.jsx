@@ -3,10 +3,18 @@ import { Col, Row, Table } from "react-bootstrap";
 import { AiFillEdit } from "react-icons/ai";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import Moment from "moment";
 
 import "./List.css";
 
-const List = ({ people }) => {
+const List = ({ people, handlePersonDelete }) => {
+  Moment.locale("pt-br");
+
+  const handleDeleteClick = (personId) => {
+    handlePersonDelete(personId);
+  };
+
   return (
     <Table striped bordered hover variant="dark">
       <thead>
@@ -20,19 +28,28 @@ const List = ({ people }) => {
       </thead>
       <tbody>
         {people.map((person, index) => (
-          <tr key={index}>
+          <tr key={person._id}>
             <td>{index + 1}</td>
             <td>{person.nome}</td>
             <td>{person.cpf}</td>
-            <td>{person.dataNascimento}</td>
+            <td>
+              {Moment(person.dataNascimento)
+                .add(1, "days")
+                .format("DD/MM/YYYY")}
+            </td>
             <td className="actions-container">
               <Row>
                 <Col sm={3}>
-                  <AiFillEdit className="action-icon" />
+                  <Link to={`/${person._id}`} className="text-link">
+                    <AiFillEdit className="action-icon" />
+                  </Link>
                 </Col>
                 |
                 <Col sm={3}>
-                  <RiDeleteBin6Fill className="action-icon" />
+                  <RiDeleteBin6Fill
+                    className="action-icon"
+                    onClick={() => handleDeleteClick(person._id)}
+                  />
                 </Col>
               </Row>
             </td>
