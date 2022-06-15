@@ -28,11 +28,12 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   let cpfValido = validaCpf(req.body.cpf);
-  let cpfExistente = findByCpf(req.body.cpf);
+  let cpfExistente = await findByCpf(req.body.cpf);
+  console.log(cpfExistente);
   try {
     if (cpfValido && !cpfExistente) {
       const pessoa = await PessoaModel.create(req.body);
-      res.status(200).send("Pessoa cadastrada com sucesso");
+      res.status(200).json(pessoa);
     } else if (!cpfValido) res.status(400).send("CPF inválido");
     else res.status(400).send("CPF já cadastrado");
   } catch (error) {
