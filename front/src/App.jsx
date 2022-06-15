@@ -24,7 +24,7 @@ function App() {
   };
 
   const handlePersonPost = (param_nome, param_dataNascimento, param_cpf) => {
-    axios
+    param_dataNascimento.axios
       .post(`${apiUrl}/pessoas`, {
         nome: param_nome,
         dataNascimento: param_dataNascimento,
@@ -51,7 +51,25 @@ function App() {
       });
   };
 
-  const handlePersonPut = (nome, data) => {};
+  const handlePersonPut = (
+    personId,
+    param_nome,
+    param_dataNascimento,
+    param_cpf
+  ) => {
+    axios
+      .put(`${apiUrl}/pessoas/${personId}`, {
+        nome: param_nome,
+        dataNascimento: param_dataNascimento,
+        cpf: param_cpf,
+      })
+      .then((res) => {
+        handlePeopleGet();
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+  };
 
   useEffect(() => {
     handlePeopleGet();
@@ -88,7 +106,7 @@ function App() {
           <Forms handlePersonPost={handlePersonPost} />
         </Route>
         <Route exact path="/:personId">
-          <FormsEdit />
+          <FormsEdit handlePersonPut={handlePersonPut} />
         </Route>
       </Switch>
     </Router>

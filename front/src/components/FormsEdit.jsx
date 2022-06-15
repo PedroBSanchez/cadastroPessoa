@@ -2,32 +2,30 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
-import {
-  Card,
-  Button,
-  Container,
-  Row,
-  Col,
-  Form,
-  FloatingLabel,
-} from "react-bootstrap";
+import { Card, Button, Container, Row, Col, Form } from "react-bootstrap";
 import { MdClose } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 const FormsEdit = ({ handlePersonPut }) => {
   const params = useParams();
-  const [person, setPerson] = useState();
+  const [person, setPerson] = useState([]);
+
+  const handleInputNameChange = (e) => {
+    person.nome = e.target.value;
+  };
 
   const apiUrl = "http://localhost:8080";
 
   useEffect(() => {
     axios.get(`${apiUrl}/pessoas/${params.personId}`).then((res) => {
-      console.log(res.data);
       setPerson(res.data);
-      console.log(person);
     });
   }, []);
+
+  const handleEditButtonClick = () => {
+    handlePersonPut(person._id, person.nome, person.dataNascimento, person.cpf);
+  };
 
   return (
     <Container>
@@ -54,6 +52,7 @@ const FormsEdit = ({ handlePersonPut }) => {
                   <Form.Control
                     placeholder={person.nome}
                     className="input-control"
+                    onChange={handleInputNameChange}
                   />
                 </Form.Group>
               </Col>
@@ -61,8 +60,9 @@ const FormsEdit = ({ handlePersonPut }) => {
                 <Form.Group>
                   <Form.Label>Data Nascimento</Form.Label>
                   <Form.Control
-                    placeholder={person.dataNascimento}
+                    placeholder="Data de nascimento"
                     type="date"
+                    onChange={(e) => (person.dataNascimento = e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -76,6 +76,17 @@ const FormsEdit = ({ handlePersonPut }) => {
               </Col>
             </Row>
           </Form>
+          <Row className="mt-5">
+            <Col sm={12} className="offset-sm-9">
+              <Button
+                variant="outline-success"
+                className="align"
+                onClick={handleEditButtonClick}
+              >
+                Editar
+              </Button>
+            </Col>
+          </Row>
         </Card>
       </Row>
     </Container>

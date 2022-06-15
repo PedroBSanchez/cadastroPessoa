@@ -30,7 +30,7 @@ const List = ({ people, handlePersonPut, handlePersonDelete }) => {
             <td>{index + 1}</td>
             <td>{person.nome}</td>
             <td>{person.cpf}</td>
-            <td>{Moment().format("DD/MM/YYYY")}</td>
+            <td>{Moment(person.dataNascimento).format("DD/MM/YYYY")}</td>
             <td className="actions-container">
               <Row>
                 <Col sm={3}>
