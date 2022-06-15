@@ -1,0 +1,16 @@
+.feedback-alignment {
+  text-align: center;
+}
+
+.accept-icon {
+  color: green;
+}
+
+.fail-icon {
+  color: red;
+}
+
+.feedback-text {
+  font-size: 18px;
+  font-weight: 700;
+}
