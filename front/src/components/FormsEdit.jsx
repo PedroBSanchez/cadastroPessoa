@@ -7,9 +7,13 @@ import { MdClose } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
-const FormsEdit = ({ handlePersonPut }) => {
+import Feedback from "./Feedback";
+
+const FormsEdit = ({ handlePersonPut, updatePersonFeedbackMessage }) => {
   const params = useParams();
   const [person, setPerson] = useState([]);
+
+  const [showModal, setShowModal] = useState(false);
 
   const handleInputNameChange = (e) => {
     person.nome = e.target.value;
@@ -25,12 +29,20 @@ const FormsEdit = ({ handlePersonPut }) => {
 
   const handleEditButtonClick = () => {
     handlePersonPut(person._id, person.nome, person.dataNascimento, person.cpf);
+    setShowModal(true);
   };
 
   return (
     <Container>
+      {showModal && (
+        <Feedback
+          message={updatePersonFeedbackMessage}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
+      )}
       <Row className="justify-content-center">
-        <Card className="mt-5 p-3" style={{ width: "40%" }}>
+        <Card className="mt-5 p-3" style={{ width: "60%" }}>
           <Row className="justify-content-end">
             <Col sm={11}>
               <h1>Editar</h1>

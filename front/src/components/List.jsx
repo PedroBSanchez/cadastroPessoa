@@ -8,7 +8,9 @@ import Moment from "moment";
 
 import "./List.css";
 
-const List = ({ people, handlePersonPut, handlePersonDelete }) => {
+const List = ({ people, handlePersonDelete }) => {
+  Moment.locale("pt-br");
+
   const handleDeleteClick = (personId) => {
     handlePersonDelete(personId);
   };
@@ -30,7 +32,11 @@ const List = ({ people, handlePersonPut, handlePersonDelete }) => {
             <td>{index + 1}</td>
             <td>{person.nome}</td>
             <td>{person.cpf}</td>
-            <td>{Moment(person.dataNascimento).format("DD/MM/YYYY")}</td>
+            <td>
+              {Moment(person.dataNascimento)
+                .add(1, "days")
+                .format("DD/MM/YYYY")}
+            </td>
             <td className="actions-container">
               <Row>
                 <Col sm={3}>

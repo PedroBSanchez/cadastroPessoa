@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import "./Forms.css";
 
+import axios from "axios";
 import {
   Card,
   Button,
@@ -15,10 +16,15 @@ import {
 import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-const Forms = ({ handlePersonPost }) => {
+import Feedback from "./Feedback";
+
+const Forms = ({ handlePersonPost, addPersonFeedbackMessage }) => {
+  const [showModal, setShowModal] = useState(false);
+
   const [name, setName] = useState("");
   const [dataNascimento, setDataNascimento] = useState();
   const [cpf, setCpf] = useState("");
+  const [validFields, setValidFields] = useState(false);
 
   const handleInputNameChange = (e) => {
     setName(e.target.value);
@@ -30,12 +36,23 @@ const Forms = ({ handlePersonPost }) => {
 
   const handleAddButtonClick = () => {
     handlePersonPost(name, dataNascimento, cpf);
+    setShowModal(true);
+    setName("");
+    setDataNascimento("");
+    setCpf("");
   };
 
   return (
     <Container>
+      {showModal && (
+        <Feedback
+          message={addPersonFeedbackMessage}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
+      )}
       <Row className="justify-content-center">
-        <Card className="mt-5 p-3 card-container" style={{ width: "40%" }}>
+        <Card className="mt-5 p-3 card-container" style={{ width: "50%" }}>
           <Row className="justify-content-end">
             <Col sm={11}>
               <h1>Cadastrar Pessoa</h1>
@@ -57,6 +74,7 @@ const Forms = ({ handlePersonPost }) => {
                     placeholder="Nome"
                     onChange={handleInputNameChange}
                     className="input-control"
+                    value={name}
                   />
                 </FloatingLabel>
               </Col>
@@ -66,6 +84,7 @@ const Forms = ({ handlePersonPost }) => {
                     placeholder="Data de nascimento"
                     type="date"
                     onChange={(e) => setDataNascimento(e.target.value)}
+                    value={dataNascimento}
                   />
                 </FloatingLabel>
               </Col>
@@ -76,6 +95,7 @@ const Forms = ({ handlePersonPost }) => {
                   <Form.Control
                     placeholder="Cpf"
                     onChange={handleInputCpfChange}
+                    value={cpf}
                   />
                 </FloatingLabel>
               </Col>
@@ -83,11 +103,7 @@ const Forms = ({ handlePersonPost }) => {
           </Form>
           <Row className="mt-5">
             <Col sm={12} className="offset-sm-9">
-              <Button
-                variant="outline-success"
-                className="align"
-                onClick={handleAddButtonClick}
-              >
+              <Button variant="outline-success" onClick={handleAddButtonClick}>
                 Adicionar
               </Button>
             </Col>

@@ -10,12 +10,24 @@ import { Button } from "react-bootstrap";
 import List from "./components/List";
 import Forms from "./components/Forms";
 import FormsEdit from "./components/FormsEdit";
+import Feedback from "./components/Feedback";
 
 function App() {
   const apiUrl = "http://localhost:8080";
 
+  const [addPersonFeedbackMessage, setAddPersonFeedbackMessage] = useState("");
+
+  const [updatePersonFeedbackMessage, setUpdatePersonFeedbackMessage] =
+    useState("");
+
+  const [deletePersonFeedbackMessage, setDeletePersonFeedbackMessage] =
+    useState("");
+
   const [people, setPeople] = useState([]);
 
+  const [showModal, setShowModal] = useState(false);
+
+  // Requisições na Api
   const handlePeopleGet = async () => {
     axios.get(`${apiUrl}/pessoas`).then((res) => {
       console.log(res.data);
@@ -24,18 +36,18 @@ function App() {
   };
 
   const handlePersonPost = (param_nome, param_dataNascimento, param_cpf) => {
-    param_dataNascimento.axios
+    axios
       .post(`${apiUrl}/pessoas`, {
         nome: param_nome,
         dataNascimento: param_dataNascimento,
         cpf: param_cpf,
       })
       .then((res) => {
+        setAddPersonFeedbackMessage(res.data);
         handlePeopleGet();
-        console.log(res);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        setAddPersonFeedbackMessage(error.response.data);
       });
   };
 
@@ -43,12 +55,13 @@ function App() {
     axios
       .delete(`${apiUrl}/pessoas/${personId}`)
       .then((res) => {
+        setDeletePersonFeedbackMessage(res.data);
         handlePeopleGet();
-        console.log(res.data);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        setDeletePersonFeedbackMessage(error.response.data);
       });
+    setShowModal(true);
   };
 
   const handlePersonPut = (
@@ -64,10 +77,11 @@ function App() {
         cpf: param_cpf,
       })
       .then((res) => {
+        setUpdatePersonFeedbackMessage(res.data);
         handlePeopleGet();
       })
       .catch((error) => {
-        console.log(error.response.data);
+        setUpdatePersonFeedbackMessage(error.response.data);
       });
   };
 
@@ -80,6 +94,13 @@ function App() {
       <Switch>
         <Route exact path="/">
           <Container>
+            {showModal && (
+              <Feedback
+                message={deletePersonFeedbackMessage}
+                showModal={showModal}
+                setShowModal={setShowModal}
+              />
+            )}
             <Row className="mt-5 top-content">
               <Col sm={8}>
                 <h1>Pessoas</h1>
@@ -103,10 +124,16 @@ function App() {
           </Container>
         </Route>
         <Route exact path="/adicionar">
-          <Forms handlePersonPost={handlePersonPost} />
+          <Forms
+            handlePersonPost={handlePersonPost}
+            addPersonFeedbackMessage={addPersonFeedbackMessage}
+          />
         </Route>
         <Route exact path="/:personId">
-          <FormsEdit handlePersonPut={handlePersonPut} />
+          <FormsEdit
+            handlePersonPut={handlePersonPut}
+            updatePersonFeedbackMessage={updatePersonFeedbackMessage}
+          />
         </Route>
       </Switch>
     </Router>
