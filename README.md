@@ -1,2 +1,2 @@
 # cadastroPessoa
-Aplicação de desafio para vaga desenvolvedor júnior da empresa MOCS
+Aplicação de desafio para vaga desenvolvedor júnior da empresa MOCX
