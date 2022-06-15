@@ -13,7 +13,7 @@ import FormsEdit from "./components/FormsEdit";
 import Feedback from "./components/Feedback";
 
 function App() {
-  const apiUrl = "https://cadas-pessoa-api-mocx.herokuapp.com";
+  const apiUrl = "https://cadastro-pessoa-api-mocx.herokuapp.com";
 
   const [addPersonFeedbackMessage, setAddPersonFeedbackMessage] = useState("");
 

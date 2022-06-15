@@ -19,7 +19,7 @@ const FormsEdit = ({ handlePersonPut, updatePersonFeedbackMessage }) => {
     person.nome = e.target.value;
   };
 
-  const apiUrl = "https://cadas-pessoa-api-mocx.herokuapp.com";
+  const apiUrl = "https://cadastro-pessoa-api-mocx.herokuapp.com";
 
   useEffect(() => {
     axios.get(`${apiUrl}/pessoas/${params.personId}`).then((res) => {
